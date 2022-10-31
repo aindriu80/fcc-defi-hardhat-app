@@ -1,4 +1,14 @@
 {
+  "name": "fcc-defi-hardhat-app",
+  "version": "0.1.0",
+  "author": "Aindriú Mac Giolla Eoin",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers",
     "@nomiclabs/hardhat-etherscan": "^3.1.2",
