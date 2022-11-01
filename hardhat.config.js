@@ -10,8 +10,7 @@ require('hardhat-deploy')
  * @type import('hardhat/config').HardhatUserConfig
  */
 
-const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || process.env.ALCHEMY_MAINNET_RPC_URL || ''
-const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || ''
+const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || ''
 const GOERLI_RPC_URL =
   process.env.GOERLI_RPC_URL || 'https://eth-goerli.alchemyapi.io/v2/your-api-key'
 const PRIVATE_KEY =
