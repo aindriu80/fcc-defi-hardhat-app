@@ -172,10 +172,10 @@
         "DataTypes"
       ]
     },
-    "/home/aindriu/Cáipéisí/Programming/projects/FreeCodeCamp/fcc-defi-hardhat-app/contracts/interfaces/ILendingPoolAddressesProvider.sol": {
-      "lastModificationDate": 1667399165160,
-      "contentHash": "a487bfd067ce6e71ddc7e9cc91302bae",
-      "sourceName": "contracts/interfaces/ILendingPoolAddressesProvider.sol",
+    "/home/aindriu/Cáipéisí/Programming/projects/FreeCodeCamp/fcc-defi-hardhat-app/contracts/interfaces/IERC20.sol": {
+      "lastModificationDate": 1667485987570,
+      "contentHash": "8d7df49826179e4e1015772df3bfe47f",
+      "sourceName": "contracts/interfaces/IERC20.sol",
       "solcConfig": {
         "version": "0.6.12",
         "settings": {
@@ -208,10 +208,10 @@
       },
       "imports": [],
       "versionPragmas": [
-        "0.6.12"
+        "^0.6.6"
       ],
       "artifacts": [
-        "ILendingPoolAddressesProvider"
+        "IERC20"
       ]
     }
   }

@@ -11,13 +11,15 @@ async function getWeth() {
     'IWeth',
     // '0XC02aaA39b223FE8D0Ae5C4F27eAD9083C756Cc2',
     // '0x994b342dd87fc825f66e51ffa3ef71ad818b6893',
-    '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
+    // '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
+    'RdiCCKsA6UUDpE1Dbe09LE9xaBciBkp8',
     deployer
   )
   const tx = await iWeth.deposit({ value: AMOUNT })
   await tx.wait(1)
   const wethBalance = await iWeth.balanceOf(deployer)
+  // const wethBalance = 0
   console.log(`Got ${wethBalance.toString()} WETH`)
 }
 
-module.exports = { getWeth }
+module.exports = { getWeth, AMOUNT }
