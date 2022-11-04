@@ -213,6 +213,44 @@
       "artifacts": [
         "IERC20"
       ]
+    },
+    "/home/aindriu/Cáipéisí/Programming/projects/FreeCodeCamp/fcc-defi-hardhat-app/contracts/interfaces/AggregatorV3Interfaces.sol": {
+      "lastModificationDate": 1667571022524,
+      "contentHash": "d41d8cd98f00b204e9800998ecf8427e",
+      "sourceName": "contracts/interfaces/AggregatorV3Interfaces.sol",
+      "solcConfig": {
+        "version": "0.8.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [],
+      "artifacts": []
     }
   }
 }
