@@ -1,4 +1,4 @@
-const { getWeth, AMOUNT } = require('../scripts/getWeth')
+const { getWeth, AMOUNT } = require('../scripts/getWeth.js')
 const { getNamedAccounts, ethers } = require('hardhat')
 
 async function main() {
@@ -15,7 +15,8 @@ async function main() {
   // deposit
   const wethTokenAddress = 'RdiCCKsA6UUDpE1Dbe09LE9xaBciBkp8'
   // approve
-  await approveErc20(wethTokenAddress, lendingPool.address, deployer)
+
+  await approveErc20(wethTokenAddress, lendingPool.address, AMOUNT, deployer)
   console.log('Depositing....')
   await lendingPool.deposit(wethTokenAddress, AMOUNT, deployer, 0)
   console.log('deposited...')
@@ -34,7 +35,7 @@ async function main() {
   await getBorrowedUserData(lendingPool, deployer)
 }
 
-async function borrowDai(daiAddress, lendingPool, amountDaiToBorrowWei, account) {
+async function borrowDai(daiAddress, lendingPool, amountDaiToBorrow, account) {
   const borrowTx = await lendingPool.borrow(daiAddress, amountDaiToBorrow, 1, 0, account)
   await borrowTx.wait(1)
   console.log(`You have borrowed!`)
@@ -51,31 +52,30 @@ async function getBorrowedUserData(lendingPool, account) {
 
 async function getDaiPrice() {
   const daiEthPriceFeed = await ethers.getContractAt(
-    'AggregatorV3Interfaces',
+    'AggregatorV3Interface',
     '0x773616E4d11A78F511299002da57A0a94577F1f4'
   )
   const price = (await daiEthPriceFeed.latestRoundData())[1]
-  console.log(`The DAI/ETH price is {price.toString()}`)
+  console.log(`The DAI/ETH price is ${price.toString()}`)
   return price
 }
-
 
 async function getLendingPool(account) {
   const lendingPoolAddressesProvider = await ethers.getContractAt(
     'ILendingPoolAddressesProvider',
-    // '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
+    '0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5',
     account
   )
   const lendingPoolAddress = await lendingPoolAddressesProvider.getLendingPool()
   const lendingPool = await ethers.getContractAt('ILendingPool', lendingPoolAddress, account)
-  const tx = await erc20Token.approve(spenderAddress, amountToSpend)
-  await tx.wait(1)
-  console.log('Approved')
   return lendingPool
 }
 
 async function approveErc20(erc20Address, spenderAddress, amountToSpend, account) {
-  const erc20Token = await ethers.getContract('IERC20', erc20Address, account)
+  const erc20Token = await ethers.getContractAt('IERC20', erc20Address, account)
+  const tx = await erc20Token.approve(spenderAddress, amountToSpend)
+  await tx.wait(1)
+  console.log('Approved')
 }
 
 main()
