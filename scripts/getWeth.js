@@ -4,7 +4,8 @@ const AMOUNT = ethers.utils.parseEther('0.02')
 
 async function getWeth() {
   const { deployer } = await getNamedAccounts()
-  console.log(deployer)
+  console.log('\033[2J')
+  console.log('Deployer ', deployer)
   // call the "deposit" function on the weth contract
   // abi :white_check_mark: , contract address
   const iWeth = await ethers.getContractAt(

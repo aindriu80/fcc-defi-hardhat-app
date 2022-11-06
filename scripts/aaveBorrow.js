@@ -6,33 +6,41 @@ async function main() {
   await getWeth()
   const { deployer } = await getNamedAccounts()
   // abi, address
-
   // Lending Pool Address Provider : X
   // Lending Pool: Y
   const lendingPool = await getLendingPool(deployer)
-  console.log(`lendingPool address ${lendingPool.address}`)
+  console.log(`LendingPool address: ${lendingPool.address}`)
 
   // deposit
-  const wethTokenAddress = 'RdiCCKsA6UUDpE1Dbe09LE9xaBciBkp8'
+  const wethTokenAddress = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
   // approve
 
   await approveErc20(wethTokenAddress, lendingPool.address, AMOUNT, deployer)
   console.log('Depositing....')
   await lendingPool.deposit(wethTokenAddress, AMOUNT, deployer, 0)
-  console.log('deposited...')
+  console.log('Deposited....')
   let { availableBorrowsETH, totalDebtETH } = await getBorrowedUserData(lendingPool, deployer)
 
   const daiPrice = await getDaiPrice()
   const amountDaiToBorrow = availableBorrowsETH.toString() * 0.95 * (1 / daiPrice.toNumber())
-  console.log(`You can borrow ${amountDaiToBorrow} DAI`)
+  console.log(`You can borrow ${amountDaiToBorrow} DAI.`)
   const amountDaiToBorrowWei = ethers.utils.parseEther(amountDaiToBorrow.toString())
 
   // availableBorrowsETH ?? What the conversion rate on DAI is?
   // Borrow Time!
   // How much have we have borrowed, how much we have in collateral, how much can we borrow
-  const daiToken = '0x6B175474E89094C44Da98b954EedeAC495271d0F'
+  const daiTokenAddress = '0x6B175474E89094C44Da98b954EedeAC495271d0F'
   await borrowDai(daiTokenAddress, lendingPool, amountDaiToBorrowWei, deployer)
   await getBorrowedUserData(lendingPool, deployer)
+  await repay(amountDaiToBorrowWei, daiTokenAddress, lendingPool, deployer)
+  await getBorrowedUserData(lendingPool, deployer)
+}
+
+async function repay(amount, daiAddress, lendingPool, account) {
+  await approveErc20(daiAddress, lendingPool.address, amount, account)
+  const repayTx = await lendingPool.repay(daiAddress, amount, 1, account)
+  await repayTx.wait(1)
+  console.log('Repaid')
 }
 
 async function borrowDai(daiAddress, lendingPool, amountDaiToBorrow, account) {
@@ -44,7 +52,7 @@ async function borrowDai(daiAddress, lendingPool, amountDaiToBorrow, account) {
 async function getBorrowedUserData(lendingPool, account) {
   const { totalCollateralETH, totalDebtETH, availableBorrowsETH } =
     await lendingPool.getUserAccountData(account)
-  console.log(`You have ${totalCollateralETH}worth of ETH deposited.`)
+  console.log(`You have ${totalCollateralETH} worth of ETH deposited.`)
   console.log(`You have ${totalDebtETH} worth of ETH borrowed.`)
   console.log(`You can borrow ${availableBorrowsETH} worth of ETH.`)
   return { availableBorrowsETH, totalDebtETH }
